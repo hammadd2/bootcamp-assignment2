@@ -1,8 +1,9 @@
-Earlier the code written, which gives error during "Yarn Build" 
+Earlier the code written by following bootcamp 2, with gives error during "Yarn Build" 
 
 EACCES: permission denied, mkdir '/home/runner/work/bootcamp-assignment2/bootcamp-assignment2/node_modules/.cache'
 The following error code which i followed from Lecture notes are below 
 # This is a basic workflow to help you get started with Actions
+----------------------------
 
 name: CI
 
