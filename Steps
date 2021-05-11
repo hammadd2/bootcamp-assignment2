@@ -1,0 +1,118 @@
+	****************************   
+	React Installation and Surge
+	****************************
+- Steps:
+1) Create React Application
+2) REact application does't understand Browser so needs to convert into javascript
+3) Files are too many, so requires "build" to compact files, and will helps to provide only required files
+4) Consider Concise files, so we use "build" either through yarn or npm. These javascript files will run on browser	 
+5) Keep source-code on Github	
+6) Git Actions Build   	
+--------------------
+*** Commands
+	 
+> hp@hp-pc:~/React Projects/Bootcamp/Bootcamp-class2-React/sajeel-app$
+> npx create-react-app sajeel-app
+> npm install -g yarn
+- index file is available on build
+> yarn build   or npm run build
+> surge ./build
+	  project: ./build
+         domain: react-assignment2.surge.sh
+         upload: [=] 100% eta: 0.0s (19 files, 530367 bytes)
+            CDN: [====================] 100%
+     encryption: *.surge.sh, surge.sh (365 days)
+             IP: 138.197.235.123
+> in Browser type react-assignment2.surge.sh
+
+
+	****************************   
+	   GIT HUB
+	****************************
+ - Github Desktop - File - Add Local Respository - select folder "sajeel-app"
+ > Commit - Publish - view on Github - Actions
+ - Now create Git Actions build:  
+ > Actions - Create yaml file and commit
+ 
+Yaml file:
+------------------------------------
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2-beta
+        with:
+          version: 12 
+
+      - name: GitHub Action for Yarn
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          # Yarn command
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build # will run `yarn build` command
+        
+      - name: installing surge
+        run: npm install -g surge
+        
+      - name: deploying on surge
+        run: surge ./build http://react-assignment2.surge.sh/ --token ${{secrets.SURGE_TOKEN}}
+
+------------------------------------
+  
+*** Create token:
+> hp@hp-pc:~/React Projects/Bootcamp/Bootcamp-class2-React/sajeel-app$
+ > surge token
+
+   9f198714e074baa0082acb589b74266c
+ > On Github project repository - setting - secrets - New repository secret 
+  Name- SURGE_TOKEN
+  value- 9f198714e074baa0082acb589b74266c - Add Secriet
+
+****
+Github Desktop - Repository ->Pull 
+
+***
+
+Vscode:
+1) remove from app.jsx "import logo from './logo.svg';"
+2) In Src folder, remove "logo.svg" file 
+3) Add code in App.js inside "return" 
+   <div className="App">
+    <h1>Assignment 2</h1>
+  </div>
+4) yarn build
+
+***
+Github Desktop
+5) Commit and push
+
+***
+Actions - Build
+
+***
+Commit and Push 
+Action - Check Build
